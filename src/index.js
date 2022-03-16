@@ -29,7 +29,6 @@ async function askEmails() {
     }
   });
   emails = input.emails.split(' ');
-  console.log(emails);
 }
 
 async function filter() {
