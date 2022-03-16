@@ -2,7 +2,7 @@
 ### a small commandline tool to bulk import email addresses to a miro project
 
 ## one time use:
-to use the script one time just execute:
+to use the script one time just execute:  
 ```npx miro-bulk-import```
 
 ## multi time use:

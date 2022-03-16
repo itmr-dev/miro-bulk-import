@@ -1,6 +1,6 @@
 {
     "name": "miro-bulk-import",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "a small commandline tool to bulk import email addresses to a miro project",
     "keywords": ["miro", "import"],
     "homepage": "https://github.com/itmr-dev/miro-bulk-import#readme",

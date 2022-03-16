@@ -9,6 +9,18 @@ import { createSpinner } from 'nanospinner';
 
 let emails = [];
 
+const args = process.argv.slice(2);
+
+async function handlePuppeteerError(error) {
+  console.log(`
+
+    ❌ Aborted!
+    The script was cancelled by the user or an error occured
+  `);
+  if (args.includes('--verbose') || args.includes('-v')) console.log(`⚠️ Error: ${error.message}\n`);
+  process.exit(1);
+}
+
 async function welcome() {
   console.log(`
   ${chalk.bgBlue('HOW IT WORKS')}
@@ -68,42 +80,36 @@ async function explainInvite() {
 async function invite() {
   const spinner = createSpinner('Starting Chrome...').start();
   const browser = await puppeteer.launch({
-    // product: 'chrome',
-    // executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-    // product: 'firefox',
-    // executablePath: 'C:\\Program Files\\Firefox Developer Edition\\firefox.exe',
     headless: false,
     devtools: false,
-    defaultViewport: {
-      width: 1920,
-      height: 1080,
-    },
-    args: ['-wait-for-browser'],
-  });
+    defaultViewport: null,
+    args: ['--wait-for-browser'],
+  }).catch(handlePuppeteerError);
   spinner.update({ text: 'Opening Miro...' });
-  const page = await browser.newPage();
-  await page.goto('https://miro.com/app/');
+  const page = await browser.newPage().catch(handlePuppeteerError);
+  await page.goto('https://miro.com/app/').catch(handlePuppeteerError);
   spinner.update({ text: 'Waiting for login...' });
   await page.waitForFunction('window.location.pathname === "/app/dashboard/"', {
     timeout: 100000000,
-  });
+  }).catch(handlePuppeteerError);
   spinner.update({ text: 'Waiting for project selection...' });
-  await page.waitForRequest((request) => request.url().includes('user-connections'));
-  await page.waitForSelector('.project-header__add-user');
+  await page.waitForRequest((request) => request.url().includes('user-connections')).catch(handlePuppeteerError);
+  await page.waitForSelector('.project-header__add-user').catch(handlePuppeteerError);
   spinner.update({ text: 'Opening invite modal...' });
-  await page.click('.project-header__add-user');
-  await page.waitForRequest((request) => request.url().includes('user-pictures'));
+  await page.click('.project-header__add-user').catch(handlePuppeteerError);
+  await page.waitForRequest((request) => request.url().includes('user-pictures')).catch(handlePuppeteerError);
 
-  const searchInput = await page.$('body > div.rtb-modal--center.rtb-modal--medium.invite-to-project-modal.effect-fadein.effect-scale.md-centered.rtb-modal.md-show > div > ng-transclude > div.rtb-modal-container__content.rtb-modal-content > div.rtb-modal-content__body.rtb-modal-body > div.filterable-users-list > div.search-panel > input');
+  const searchInput = await page.$('body > div.rtb-modal--center.rtb-modal--medium.invite-to-project-modal.effect-fadein.effect-scale.md-centered.rtb-modal.md-show > div > ng-transclude > div.rtb-modal-container__content.rtb-modal-content > div.rtb-modal-content__body.rtb-modal-body > div.filterable-users-list > div.search-panel > input')
+    .catch(handlePuppeteerError);
   // eslint-disable-next-line no-restricted-syntax
   for await (const email of emails) {
     spinner.update({ text: `Adding ${email}...` });
-    await searchInput.type(email);
-    await page.waitForResponse((request) => request.url().includes('user-connections'));
+    await searchInput.type(email).catch(handlePuppeteerError);
+    await page.waitForResponse((request) => request.url().includes('user-connections')).catch(handlePuppeteerError);
     // await page.waitForRequest((request) => request.url().includes('user-pictures'));
-    await page.click('.filterable-list__column-email');
-    await searchInput.click({ clickCount: 3 });
-    await searchInput.press('Backspace');
+    await page.click('.filterable-list__column-email').catch(handlePuppeteerError);
+    await searchInput.click({ clickCount: 3 }).catch(handlePuppeteerError);
+    await searchInput.press('Backspace').catch(handlePuppeteerError);
   }
   spinner.success({ text: 'Added all emails!' });
 }
