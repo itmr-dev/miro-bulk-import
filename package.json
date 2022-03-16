@@ -11,5 +11,10 @@
     },
     "author": "Marc Rufeis",
     "license": "ISC",
-    "comment": "created with the vscode Let's Hassel extension"
+    "comment": "created with the vscode Let's Hassel extension",
+    "devDependencies": {
+        "eslint": "^8.11.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-plugin-import": "^2.25.4"
+    }
 }
