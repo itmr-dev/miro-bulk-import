@@ -1,6 +1,6 @@
 {
     "name": "miro-bulk-import",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "a small commandline tool to bulk import email addresses to a miro project",
     "bin": "./src/index.js",
     "type": "module",
