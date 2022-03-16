@@ -3,7 +3,7 @@
 
 import chalk from 'chalk';
 import inquirer from 'inquirer';
-import puppeteer from 'puppeteer-core';
+import puppeteer from 'puppeteer';
 import clipboard from 'clipboardy';
 import { createSpinner } from 'nanospinner';
 
@@ -69,8 +69,8 @@ async function explainInvite() {
 async function invite() {
   const spinner = createSpinner('Starting Chrome...').start();
   const browser = await puppeteer.launch({
-    product: 'chrome',
-    executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+    // product: 'chrome',
+    // executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
     // product: 'firefox',
     // executablePath: 'C:\\Program Files\\Firefox Developer Edition\\firefox.exe',
     headless: false,
