@@ -1,7 +1,13 @@
 {
     "name": "miro-bulk-import",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "a small commandline tool to bulk import email addresses to a miro project",
+    "keywords": ["miro", "import"],
+    "homepage": "https://github.com/itmr-dev/miro-bulk-import#readme",
+    "bugs": {
+        "url" : "https://github.com/itmr-dev/miro-bulk-import/issues",
+        "email" : "info@itmr-dev.de"
+    },
     "bin": "./src/index.js",
     "type": "module",
     "main": "src/index.js",
@@ -11,7 +17,12 @@
         "dev": "nodemon src",
         "lint": "eslint src"
     },
-    "author": "Marc Rufeis",
+    "author": {
+        "name" : "Marc Rufeis",
+        "email" : "hello@marcrufeis.de",
+        "url" : "https://www.marcrufeis.de/"
+    },
+    "repository": "github:itmr-dev/miro-bulk-import",
     "license": "ISC",
     "comment": "created with the vscode Let's Hassel extension",
     "devDependencies": {
